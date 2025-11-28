@@ -1,4 +1,4 @@
-const CACHE_NAME = 'smartsaver-v2';
+const CACHE_NAME = 'smartsaver-v3'; // 版本號更新
 const urlsToCache = [
   '/',
   '/index.html',
