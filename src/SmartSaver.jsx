@@ -315,6 +315,52 @@ const FeaturePromoDecoder = () => {
   );
 };
 
+// 將 InputCard 移到 FeaturePriceCompare 外部定義 (關鍵修正)
+const InputCard = ({ label, price, setPrice, amount, setAmount, unit, isWinner }) => (
+  <div className={`rounded-3xl p-5 transition-all duration-300 border backdrop-blur-md relative overflow-hidden ${isWinner ? 'bg-white/20 border-white/40 shadow-xl scale-[1.02] z-10' : 'bg-white/10 border-white/10 shadow-sm'}`}>
+    
+    {isWinner && (
+      <div className="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-sm">
+        最划算
+      </div>
+    )}
+
+    <div className="flex justify-between items-center mb-4">
+      <span className={`font-bold text-lg ${isWinner ? 'text-white' : 'text-blue-50 opacity-80'}`}>{label}</span>
+    </div>
+    
+    <div className="flex gap-3">
+      <div className="flex-1">
+          <label className="text-[10px] text-blue-100 block mb-1 opacity-70">價格 ($)</label>
+          <input 
+            type="number" 
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="w-full bg-black/10 border border-white/5 p-3 rounded-xl text-lg font-semibold text-white placeholder-white/20 outline-none focus:bg-black/20 transition"
+            placeholder="0"
+          />
+      </div>
+      <div className="flex-1">
+          <label className="text-[10px] text-blue-100 block mb-1 opacity-70">單位 (g/ml)</label>
+          <input 
+            type="number" 
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className="w-full bg-black/10 border border-white/5 p-3 rounded-xl text-lg font-semibold text-white placeholder-white/20 outline-none focus:bg-black/20 transition"
+            placeholder="0"
+          />
+      </div>
+    </div>
+
+    <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+        <span className="text-xs text-blue-100 opacity-60">每單位價格</span>
+        <span className={`font-mono font-bold text-xl ${isWinner ? 'text-yellow-300' : 'text-white/60'}`}>
+          {unit !== null ? `$${unit.toFixed(4)}` : '--'}
+        </span>
+    </div>
+  </div>
+);
+
 const FeaturePriceCompare = () => {
   const [priceA, setPriceA] = useState('');
   const [amountA, setAmountA] = useState('');
@@ -346,51 +392,6 @@ const FeaturePriceCompare = () => {
       comparison = 'Equal';
     }
   }
-
-  const InputCard = ({ label, price, setPrice, amount, setAmount, unit, isWinner }) => (
-    <div className={`rounded-3xl p-5 transition-all duration-300 border backdrop-blur-md relative overflow-hidden ${isWinner ? 'bg-white/20 border-white/40 shadow-xl scale-[1.02] z-10' : 'bg-white/10 border-white/10 shadow-sm'}`}>
-      
-      {isWinner && (
-        <div className="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-sm">
-          最划算
-        </div>
-      )}
-
-      <div className="flex justify-between items-center mb-4">
-        <span className={`font-bold text-lg ${isWinner ? 'text-white' : 'text-blue-50 opacity-80'}`}>{label}</span>
-      </div>
-      
-      <div className="flex gap-3">
-        <div className="flex-1">
-           <label className="text-[10px] text-blue-100 block mb-1 opacity-70">價格 ($)</label>
-           <input 
-             type="number" 
-             value={price}
-             onChange={(e) => setPrice(e.target.value)}
-             className="w-full bg-black/10 border border-white/5 p-3 rounded-xl text-lg font-semibold text-white placeholder-white/20 outline-none focus:bg-black/20 transition"
-             placeholder="0"
-           />
-        </div>
-        <div className="flex-1">
-           <label className="text-[10px] text-blue-100 block mb-1 opacity-70">單位 (g/ml)</label>
-           <input 
-             type="number" 
-             value={amount}
-             onChange={(e) => setAmount(e.target.value)}
-             className="w-full bg-black/10 border border-white/5 p-3 rounded-xl text-lg font-semibold text-white placeholder-white/20 outline-none focus:bg-black/20 transition"
-             placeholder="0"
-           />
-        </div>
-      </div>
-
-      <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-         <span className="text-xs text-blue-100 opacity-60">每單位價格</span>
-         <span className={`font-mono font-bold text-xl ${isWinner ? 'text-yellow-300' : 'text-white/60'}`}>
-           {unit !== null ? `$${unit.toFixed(4)}` : '--'}
-         </span>
-      </div>
-    </div>
-  );
 
   return (
     <div className="flex flex-col h-full bg-gradient-to-br from-blue-500 to-cyan-400 text-white">
